@@ -1,6 +1,6 @@
 import re,pathlib
 
-gamename = "nibbler"
+gamename = "tiger_heli"
 
 # game_specific: replace or remove I/O addresses
 # if not done it will write in ROM here!!
@@ -17,11 +17,13 @@ line_to_pull_cc_protect = set() | single_line_to_cc_protect
 line_to_pull_cc_prev_protect = set()
 
 
-store_to_video = re.compile("GET_ADDRESS\s+(0x8\w\w\w|video_ram_d)",flags=re.I)   # game_specific
+store_to_video = re.compile("GET_ADDRESS\s+(0xd\w\w\w|video_ram_d)",flags=re.I)   # game_specific
 
 def game_specific(address,lines,i):
     line = lines[i]
     # game_specific
+    if address == 0x0240:
+        line = remove_instruction(lines,i)  # stack set
     return line
 
 
